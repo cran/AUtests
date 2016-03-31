@@ -1,0 +1,70 @@
+---
+title: "AUtests: approximate unconditional and permutation tests for 2x2 tables"
+author: "Arjun Sondhi"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{AUtests: approximate unconditional and permutation tests for 2x2 tables}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+This package contains functions for association testing in 2x2 tables (ie. two binary variables). In particular, the scientific setting that motivated this package's development was testing for associations between diseases and rare genetic variants in case-control studies. When the expected number of subjects possessing a variant is small, standard methods perform poorly (usually tend to be overly conservative in controlling the Type I error). 
+
+The two alternative methods implemented in the package are permutation testing and approximate unconditional (AU) testing. 
+
+## Permutation tests
+
+Permutation testing works by computing a test statistic T for the observed data, generating all plausible datasets with the same total number of exposed subjects, then adding up the probabilities of those datasets which give more extreme test statistics than T.
+
+The `perm.tests` function returns p-values from permutation tests based on score, likelihood ratio, Wald (with and without regularization), and Firth statistics. 
+
+The following code runs the tests for a dataset containing 5,000 cases (55 with a minor allele of interest) and 15,000 controls (45 with a minor allele of interest):
+
+```{r}
+library(AUtests)
+# Example data, 1:3 case-control ratio
+perm.tests(15000, 5000, 45, 55)
+```
+
+For comparison purposes, the `basic.tests` function returns p-values for the standard score, likelihood ratio, Wald, Firth, and Fisher's exact tests:
+
+```{r}
+basic.tests(15000, 5000, 45, 55)
+```
+
+## Approximate unconditional tests
+
+AU testing works by computing a test statistic T for the observed data, generating all plausible datasets with *any* number of variants, then adding up the probabilities of those datasets which give more extreme test statistics than T.
+
+The `au.tests` function returns p-values from AU tests based on score, likelihood ratio, and Wald (with and without regularization) statistics. The `au.firth` function returns a p-value from the AU Firth test. It was implemented as a separate function due to its increased computational time.
+
+The following code runs the tests for a dataset containing 10,000 cases (60 with a minor allele of interest) and 10,000 controls (45 with a minor allele of interest):
+
+```{r}
+# Example data, balanced case-control ratio
+au.tests(10000, 10000, 45, 60)
+au.firth(10000, 10000, 45, 60)
+```
+
+## AU and permutation likelihood ratio tests with categorical covariates
+
+In order to gain precision or adjust for a confounding variable, it can be of interest to perform a stratified analysis. The `perm.test.strat` function implements a permutation likelihood ratio test that allows for categorical covariates, and the `au.test.strat` implements a similar AU test. The functions read in vectors of controls, cases, controls with the exposure, and cases wih the exposure, where the i-th element of each vector corresponds to the coount for the i-th strata. 
+
+Consider the following example data, with two strata (ie. a binary covariate):
+```{r}
+m0list = c(500, 1250) # controls 
+m1list = c(150, 100) # cases 
+r0list = c(60, 20) # exposed controls
+r1list = c(25, 5) # exposed cases
+```
+A non-stratified analysis would yield a highly significant result:
+```{r}
+perm.tests(1750, 250, 80, 30)
+au.tests(1750, 250, 80, 30)
+```
+When adjusting for the covariate, however, the result is much less significant:
+```{r}
+perm.test.strat(m0list, m1list, r0list, r1list)
+au.test.strat(m0list, m1list, r0list, r1list)
+```

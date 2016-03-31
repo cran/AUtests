@@ -1,0 +1,3 @@
+exportPattern("^[^\\.]")
+import(logistf)
+importFrom("stats", "dbinom", "dhyper", "fisher.test", "pchisq", "pnorm", "qbinom")
