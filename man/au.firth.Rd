@@ -22,7 +22,7 @@ A single AU p-value, computed under the Firth test.
 }
 \description{
 Calculates approximate unconditional Firth test p-value for testing independence in 2x2 case-control tables.
-The Firth test requires more computational resources than the tests computed in the au.tests function.
+The Firth test requires significantly more computational time than the tests computed in the au.tests function.
 }
 \examples{
 au.firth(15000, 5000, 1, 0)

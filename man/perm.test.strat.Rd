@@ -20,7 +20,7 @@ A permutation p-value, computed under the likelihood ratio test.
 }
 \description{
 Calculates permutation p-values for testing independence in 2x2 case-control tables, while adjusting for categorical covariates. 
-Inputs are given as a vector of counts in each strata defined by the covariate(s).
+Inputs are given as a vector of counts in each strata defined by the covariate(s). Note that computational time can be extremely high.
 }
 \examples{
 perm.test.strat(c(7000, 1000), c(11000, 1000), c(50, 30), c(70, 40))

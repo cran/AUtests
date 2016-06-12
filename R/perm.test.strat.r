@@ -1,7 +1,7 @@
 #' Stratified permutation testing
 #'
 #' Calculates permutation p-values for testing independence in 2x2 case-control tables, while adjusting for categorical covariates. 
-#' Inputs are given as a vector of counts in each strata defined by the covariate(s).  
+#' Inputs are given as a vector of counts in each strata defined by the covariate(s). Note that computational time can be extremely high.
 #' @param m0list Number of control subjects in each strata
 #' @param m1list Number of case subjects in each strata
 #' @param r0list Number of control subjects exposed in each strata
@@ -22,6 +22,8 @@ perm.test.strat = function(m0list, m1list, r0list, r1list)
 	{
 		dd = data.frame(r0x=0:(r0list[i]+r1list[i]))
 		dd$r1x = r0list[i] + r1list[i] - dd$r0x
+    delrows = which(with(dd, r0x > m0list[i] | r1x > m1list[i]))
+    if (length(delrows) > 0) dd = dd[-delrows,]
 
 		dd$prob = dhyper(dd$r1x, r0list[i]+r1list[i], m0list[i]+m1list[i]-r0list[i]-r1list[i], m1list[i], log=TRUE)
 

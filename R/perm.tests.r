@@ -64,8 +64,9 @@ perm.tests = function(m0, m1, r0, r1, lowthresh=1E-12)
 	# Permutation testing
  	dd = data.frame(r0x=0:(r0+r1))
  	dd$r1x = r0 + r1 - dd$r0x
+  delrows = which(with(dd, r0x > m0 | r1x > m1))
+  if (length(delrows) > 0) dd = dd[-delrows,]
  	dd$prob = dhyper(dd$r1x, r0+r1, m0+m1-r0-r1, m1)
-	dd = dd[dd$prob > lowthresh,]
 	
 	dd$firthx = sapply(1:nrow(dd), function(x) sum(c(-2,2)*(logistf(c(1,1,0,0) ~ c(1,0,1,0), 
 	weights=c(dd$r1x[x], m1-dd$r1x[x], dd$r0x[x], m0-dd$r0x[x]))$loglik)))

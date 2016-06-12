@@ -1,7 +1,7 @@
 #' Stratified AU testing
 #'
 #' Calculates AU p-values for testing independence in 2x2 case-control tables, while adjusting for categorical covariates. 
-#' Inputs are given as a vector of counts in each strata defined by the covariate(s).  
+#' Inputs are given as a vector of counts in each strata defined by the covariate(s). Note that computational time can be extremely high. 
 #' @param m0list Number of control subjects in each strata
 #' @param m1list Number of case subjects in each strata
 #' @param r0list Number of control subjects exposed in each strata
@@ -28,6 +28,9 @@ au.test.strat = function(m0list, m1list, r0list, r1list, lowthresh=1E-12)
 		
 		dd = expand.grid(r0x=0:min(hicount, m0list[i]), r1x=0:min(hicount, m1list[i]))
 		dd = dd[dd$r0x + dd$r1x <= hicount & dd$r0x + dd$r1x >= locount,]
+    delrows = which(with(dd, r0x > m0list[i] | r1x > m1list[i]))
+    if (length(delrows) > 0) dd = dd[-delrows,]
+    
 		dd$prob = dbinom(dd$r0x, m0list[i], p, log = TRUE) + dbinom(dd$r1x, m1list[i], p, log = TRUE)
 
 		dd$p0x = with(dd, r0x/m0list[i])

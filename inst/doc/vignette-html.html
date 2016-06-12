@@ -11,7 +11,7 @@
 
 <meta name="author" content="Arjun Sondhi" />
 
-<meta name="date" content="2016-03-30" />
+<meta name="date" content="2016-06-12" />
 
 <title>AUtests: approximate unconditional and permutation tests for 2x2 tables</title>
 
@@ -52,7 +52,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 <h1 class="title">AUtests: approximate unconditional and permutation tests for 2x2 tables</h1>
 <h4 class="author"><em>Arjun Sondhi</em></h4>
-<h4 class="date"><em>2016-03-30</em></h4>
+<h4 class="date"><em>2016-06-12</em></h4>
 
 </div>
 
@@ -68,7 +68,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="co"># Example data, 1:3 case-control ratio</span>
 <span class="kw">perm.tests</span>(<span class="dv">15000</span>, <span class="dv">5000</span>, <span class="dv">45</span>, <span class="dv">55</span>)</code></pre>
 <pre><code>##      score.p         lr.p       wald.p      wald0.p      firth.p 
-## 1.357844e-10 3.101871e-10 1.357844e-10 1.005742e-10 1.456908e-10</code></pre>
+## 1.362901e-10 3.109880e-10 1.362901e-10 1.365853e-10 1.464917e-10</code></pre>
 <p>For comparison purposes, the <code>basic.tests</code> function returns p-values for the standard score, likelihood ratio, Wald, Firth, and Fisher’s exact tests:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">basic.tests</span>(<span class="dv">15000</span>, <span class="dv">5000</span>, <span class="dv">45</span>, <span class="dv">55</span>)</code></pre>
 <pre><code>##      score.p         lr.p       wald.p      wald0.p      firth.p 

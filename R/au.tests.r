@@ -69,6 +69,8 @@ au.tests = function(m0, m1, r0, r1, lowthresh=1E-12)
 
  	dd = expand.grid(r0x=0:hicount, r1x=0:hicount)
 	dd = dd[-1,]
+  delrows = which(with(dd, r0x > m0 | r1x > m1))
+  if (length(delrows) > 0) dd = dd[-delrows,]
  	dd$prob = dbinom(dd$r0x, m0, p)*dbinom(dd$r1x, m1, p)
 		
  	dd$px = with(dd, (r0x+r1x+1)/(m0+m1+2) )

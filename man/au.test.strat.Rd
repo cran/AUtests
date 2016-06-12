@@ -22,7 +22,7 @@ An AU p-value, computed under the likelihood ratio test.
 }
 \description{
 Calculates AU p-values for testing independence in 2x2 case-control tables, while adjusting for categorical covariates. 
-Inputs are given as a vector of counts in each strata defined by the covariate(s).
+Inputs are given as a vector of counts in each strata defined by the covariate(s). Note that computational time can be extremely high.
 }
 \examples{
 au.test.strat(c(500, 1250), c(150, 100), c(0, 0), c(10, 5))
