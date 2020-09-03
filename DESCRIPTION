@@ -1,6 +1,6 @@
 Package: AUtests
 Title: Approximate Unconditional and Permutation Tests
-Version: 0.98
+Version: 0.99
 Author: Arjun Sondhi, Ken Rice
 Maintainer: Arjun Sondhi <asondhi@uw.edu>
 Description: Performs approximate unconditional and permutation testing for
@@ -11,10 +11,10 @@ Depends: R (>= 3.1.2)
 License: GPL-2
 Imports: logistf
 LazyLoad: yes
-Suggests: knitr
+Suggests: knitr, markdown
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
-Packaged: 2016-06-12 19:11:27 UTC; Arjun
+Packaged: 2020-09-03 21:45:22 UTC; asondhi
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2016-06-12 22:25:10
+Date/Publication: 2020-09-03 22:12:20 UTC

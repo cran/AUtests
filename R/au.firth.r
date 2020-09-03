@@ -32,9 +32,10 @@ au.firth = function(m0, m1, r0, r1, lowthresh=1E-12)
 	
 	y = c(1,1,0,0)
  	x = c(1,0,1,0)
+ 	data = data.frame(y = y, x = x)
  	weights = c(r1, m1-r1, r0, m0-r0)
 	
- 	firth.t = sum(c(-2,2)*logistf(y~x, weights=weights)$loglik)
+ 	firth.t = sum(c(-2,2)*logistf(y~x, data=data, weights=weights)$loglik)
 
 	# Approximate unconditional p-value
  	hicount = qbinom(lowthresh, m0+m1, p, lower.tail = F)
@@ -45,7 +46,7 @@ au.firth = function(m0, m1, r0, r1, lowthresh=1E-12)
  	dd$prob = dbinom(dd$r0x, m0, p)*dbinom(dd$r1x, m1, p)
 	
 	dd$firth.tx = sapply(1:nrow(dd), function(a)
-	{sum(c(-2,2)*logistf(c(1,1,0,0) ~ c(1,0,1,0), weights = c(dd$r1x[a], m1-dd$r1x[a], dd$r0x[a], m0-dd$r0x[a]))$loglik)})
+	{sum(c(-2,2)*logistf(y~x, data=data, weights = c(dd$r1x[a], m1-dd$r1x[a], dd$r0x[a], m0-dd$r0x[a]))$loglik)})
 		
 	matchrow = which( with(dd, r0x==r0 & r1x==r1) )
   p.obs = dd[matchrow, "prob"]

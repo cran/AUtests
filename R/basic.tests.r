@@ -63,7 +63,10 @@ basic.tests = function(m0, m1, r0, r1)
 	}
 
 	# Firth test
-	m.firth = logistf(c(1,1,0,0) ~ c(1,0,1,0), weights=c(r1, m1-r1, r0, m0-r0))
+	y = c(1,1,0,0)
+	x = c(1,0,1,0)
+	data = data.frame(y = y, x = x)
+	m.firth = logistf(y~x, data=data, weights=c(r1, m1-r1, r0, m0-r0))
 	firth.t = sum(c(-2, 2)*m.firth$loglik)
 	firth.pv = m.firth$prob[2]
 	names(firth.pv) = NULL
